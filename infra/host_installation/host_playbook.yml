@@ -48,7 +48,7 @@
     become: true
 
   - name: Build the VirtualBox kernel module 
-    command: {{ item }}
+    command: name={{ item }}
     with_items: 
      - export KERN_DIR=/usr/src/kernels/$(uname -r)
      - /sbin/rcvboxdrv setup
