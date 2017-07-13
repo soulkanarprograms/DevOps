@@ -1,0 +1,64 @@
+---
+Fase1: 
+  Name: Host Preparation
+  Step1: 
+    Name: Install Softwares on OS
+    SubStep1: Install Ansible
+      commands:
+        - sudo yum install epel-release -y
+        - sudo yum install Ansible -y
+    SubStep3: Install git
+      commands:
+        - sudo yum install git -y
+  Step2: 
+    Name: Download VirtualBox Repositories
+    SubStep1: Execute Vagrant and VirtualBox Playbook
+      commands:
+        - git clone {{git url: param}}
+  Step3: 
+    Name: Create Host Configuration
+    SubStep1: Execute Vagrant and VirtualBox Playbook
+      commands:
+        - cd ........
+        - ansible-playbook xxxxxx.....yml
+Fase2:
+  Name: Environments Creation
+  Step1: 
+    Name: Download Base Repositories
+    SubStep1: Download Infrastructure Repository, VagrantFile for DEV, HMG, PRD and  SCM & CI environments creation
+      commands:
+        - git clone {{git url: param}}
+    SubStep2: Download Infrastructure Repository, Ansible Playbook configuration for DEV, HMG, PRD and  SCM & CI environments
+      commands:
+        - git clone {{git url: param}}
+    SubStep4: Download Source Code Repository
+      commands:
+        - git clone {{git url: param}}
+
+  Step2: 
+    Name: Create Environments
+    SubStep1: Create Environments using VagrantFiles
+      commands:
+        - vagrant up
+    SubStep2: Create Environments using Ansible Playbook
+      commands:
+        - cd ........
+        - ansible-playbook xxxxxx.....yml
+  Step3: 
+    Name: Cache Environments Images for faster launch
+      commands:
+        - Create Boxes to use cached information
+Fase3:
+  Name: Execution
+  Step1: 
+    Name: Generate a RC Version
+    SubStep1: Identify Source Commit
+      commands:
+        - Chron??? (WebHook)
+    SubStep2: Start CI Environment
+      commands:
+        - cd ....
+        - vagrant up
+    SubStep3: Start CI Process
+      commands:
+        - 

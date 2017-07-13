@@ -1,0 +1,19 @@
+---
+- hosts: 127.0.0.1
+  sudo: yes
+
+  tasks:
+  - name: Change scripts permissions
+    command: chmod +x {{ item }}
+    with_items:
+      - /host_installation/virtualbox.sh
+      - /host_installation/vagrant.sh
+
+
+  - name: Install VirtualBox
+    script: /host_installation/virtualbox.sh --some-arguments VirtualBox-5.1
+    #run_once: true
+
+  - name: Install Vagrant
+    script: /host_installation/vagrant.sh --some-arguments https://releases.hashicorp.com/vagrant/1.8.1/vagrant_1.8.1_x86_64.rpm 
+    #run_once: true
