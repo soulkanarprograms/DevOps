@@ -29,6 +29,8 @@
       url: http://download.virtualbox.org/virtualbox/rpm/rhel/virtualbox.repo
       dest: /etc/yum.repos.d
       mode: 0544
+    become: true
+    when: ansible_os_family == "RedHat"
 
   - name: Install VirtualBox
     yum: name=VirtualBox-5.1 state=present
@@ -41,13 +43,15 @@
      - ls /usr/src/kernels/
      - uname -r
     become: true
+    when: ansible_os_family == "RedHat"
 
   - name: Build the VirtualBox kernel module 
-    command: name={{ item }}
+    command: echo {{ item }}
     with_items: 
      - export KERN_DIR=/usr/src/kernels/$(uname -r)
      - /sbin/rcvboxdrv setup
-    become: true    
+    become: true
+    when: ansible_os_family == "RedHat"
  
   - name: Install Vagrant
     yum: name=https://releases.hashicorp.com/vagrant/1.8.1/vagrant_1.8.1_x86_64.rpm state=present
