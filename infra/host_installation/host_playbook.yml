@@ -28,7 +28,7 @@
     get_url:
       url: http://download.virtualbox.org/virtualbox/rpm/rhel/virtualbox.repo
       dest: /etc/yum.repos.d
-      mode: 0440
+      mode: 0544
 
   - name: Install VirtualBox
     yum: name=VirtualBox-5.1 state=present
