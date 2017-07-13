@@ -25,17 +25,15 @@
     when: ansible_os_family == "RedHat"
 
   - name: Download VirtualBox Repository
-    command: wget -P /etc/yum.repos.d http://download.virtualbox.org/virtualbox/rpm/rhel/virtualbox.repo
-    become: true
+    get_url:
+      url: http://download.virtualbox.org/virtualbox/rpm/rhel/virtualbox.repo
+      dest: /etc/yum.repos.d
+      mode: 0440
 
   - name: Install VirtualBox
     yum: name=VirtualBox-5.1 state=present
     become: true
     when: ansible_os_family == "RedHat"
-
-  - name: Download VirtualBox Repository
-    command: wget http://download.virtualbox.org/virtualbox/rpm/rhel/virtualbox.repo
-    become: true
 
   - name: Check that you have the kernel sources downloaded for your running kernel version (if they don't match you might need to yum update and reboot)
     command: echo {{ item }}
