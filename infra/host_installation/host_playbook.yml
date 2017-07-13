@@ -24,11 +24,8 @@
     become: true
     when: ansible_os_family == "RedHat"
 
-  - name: Change Directory for VirtualBox Installation
-    command: chdir=/etc/yum.repos.d
-
   - name: Download VirtualBox Repository
-    command: wget http://download.virtualbox.org/virtualbox/rpm/rhel/virtualbox.repo
+    command: wget -P /etc/yum.repos.d http://download.virtualbox.org/virtualbox/rpm/rhel/virtualbox.repo
     become: true
 
   - name: Install VirtualBox
