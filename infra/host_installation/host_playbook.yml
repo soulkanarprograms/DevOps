@@ -1,19 +1,60 @@
 ---
 - hosts: 127.0.0.1
-  sudo: yes
+  
+  vars:
+    playbook_dir : $PWD
 
   tasks:
-  - name: Change scripts permissions
-    command: chmod +x {{ item }}
+  - name: Install VirtualBox Dependences
+    yum: name={{ item }} state=present
     with_items:
-      - /host_installation/virtualbox.sh
-      - /host_installation/vagrant.sh
+      - gcc
+      - make
+      - patch
+      - dkms
+      - qt
+      - libgomp
+      - kernel-headers
+      - kernel-devel
+      - fontforge
+      - binutils
+      - glibc-headers
+      - glibc-devel
+    run_once: true
+    become: true
+    when: ansible_os_family == "RedHat"
 
+  - name: Change Directory for VirtualBox Installation
+    command: chdir=/etc/yum.repos.d
+
+  - name: Download VirtualBox Repository
+    command: wget http://download.virtualbox.org/virtualbox/rpm/rhel/virtualbox.repo
+    become: true
 
   - name: Install VirtualBox
-    script: /host_installation/virtualbox.sh --some-arguments VirtualBox-5.1
-    #run_once: true
+    yum: name=VirtualBox-5.1 state=present
+    become: true
+    when: ansible_os_family == "RedHat"
 
+  - name: Download VirtualBox Repository
+    command: wget http://download.virtualbox.org/virtualbox/rpm/rhel/virtualbox.repo
+    become: true
+
+  - name: Check that you have the kernel sources downloaded for your running kernel version (if they don't match you might need to yum update and reboot)
+    command: echo {{ item }}
+    with_items: 
+     - ls /usr/src/kernels/
+     - uname -r
+    become: true
+
+  - name: Build the VirtualBox kernel module 
+    command: {{ item }}
+    with_items: 
+     - export KERN_DIR=/usr/src/kernels/$(uname -r)
+     - /sbin/rcvboxdrv setup
+    become: true    
+ 
   - name: Install Vagrant
-    script: /host_installation/vagrant.sh --some-arguments https://releases.hashicorp.com/vagrant/1.8.1/vagrant_1.8.1_x86_64.rpm 
-    #run_once: true
+    yum: name=https://releases.hashicorp.com/vagrant/1.8.1/vagrant_1.8.1_x86_64.rpm state=present
+    become: true
+    when: ansible_os_family == "RedHat"

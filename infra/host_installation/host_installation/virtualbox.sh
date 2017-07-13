@@ -5,7 +5,7 @@ program="VirtualBox"
 
 condition=$(which $program 2>/dev/null | grep -v "not found" | wc -l)
 
-if [ $condition -eq 1 ] ; then
+if [ $condition -eq 0 ] ; then
     
     # Install dependencies
 	yum -y install gcc make patch  dkms qt libgomp
