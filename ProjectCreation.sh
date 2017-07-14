@@ -9,13 +9,13 @@ git_URL="https://github.com/soulkanarprograms/DevOps.git"
 if [ -z '$mypassword' ] ; then
 
 	#Epel-Release Repository Installation
-	echo mypassword | sudo -S yum install -y epel-release 
+	echo $mypassword | sudo -S yum install -y epel-release 
 
 	#Ansible Installation
-	echo mypassword | sudo -S yum install -y ansible
+	echo $mypassword | sudo -S yum install -y ansible
 
 	#Git Installation
-	echo mypassword | sudo -S yum install git -y
+	echo $mypassword | sudo -S yum install git -y
 
 else
 
