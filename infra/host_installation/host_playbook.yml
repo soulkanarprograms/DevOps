@@ -1,6 +1,6 @@
 ---
 - hosts: 127.0.0.1
-  gather_facts: no
+  #gather_facts: no
   
   vars:
     playbook_dir : $PWD
@@ -37,9 +37,7 @@
     command: echo {{ item }}
     with_items: 
      - yum clean all
-    become: true
-    when: ansible_os_family == "RedHat"
-    
+    become: true    
 
   - name: Install VirtualBox
     yum: name=VirtualBox-5.1 state=present
