@@ -1,5 +1,6 @@
 ---
 - hosts: 127.0.0.1
+  gather_facts: no
   
   vars:
     playbook_dir : $PWD
@@ -20,7 +21,7 @@
       - binutils
       - glibc-headers
       - glibc-devel
-    run_once: true
+    #run_once: true
     become: true
     when: ansible_os_family == "RedHat"
 
@@ -31,6 +32,14 @@
       mode: 0544
     become: true
     when: ansible_os_family == "RedHat"
+
+  - name: Update Repository List
+    command: echo {{ item }}
+    with_items: 
+     - yum clean all
+    become: true
+    when: ansible_os_family == "RedHat"
+    
 
   - name: Install VirtualBox
     yum: name=VirtualBox-5.1 state=present
