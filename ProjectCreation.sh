@@ -8,14 +8,16 @@ git_URL="https://github.com/soulkanarprograms/DevOps.git"
 #If mypassword is set then do not ask for pasword in prompt command
 if [ -z '$mypassword' ] ; then
 
+	echo $mypassword | sudo -
+
 	#Epel-Release Repository Installation
-	echo $mypassword | sudo -S yum install -y epel-release 
+	yum install -y epel-release 
 
 	#Ansible Installation
-	echo $mypassword | sudo -S yum install -y ansible
+	yum install -y ansible
 
 	#Git Installation
-	echo $mypassword | sudo -S yum install git -y
+	yum install git -y
 
 else
 
