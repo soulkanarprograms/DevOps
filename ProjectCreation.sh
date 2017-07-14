@@ -10,16 +10,27 @@ if [ -z '$mypassword' ] ; then
 
 	echo $mypassword | sudo -
 
+	#Epel-Release Repository Installation
+	yum install -y epel-release 
+
+	#Ansible Installation
+	yum install -y ansible
+
+	#Git Installation
+	yum install git -y
+
+else
+
+	#Epel-Release Repository Installation
+	sudo yum install -y epel-release 
+
+	#Ansible Installation	
+	sudo yum install -y ansible
+
+	#Git Installation	
+	sudo yum install git -y
+
 fi
-
-#Epel-Release Repository Installation
-yum install -y epel-release 
-
-#Ansible Installation
-yum install -y ansible
-
-#Git Installation
-yum install git -y
 
 #Clone Git Repository
 git clone $git_URL
