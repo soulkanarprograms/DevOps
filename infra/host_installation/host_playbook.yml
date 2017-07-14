@@ -32,11 +32,6 @@
     become: true
     when: ansible_os_family == "RedHat"
 
-#  - name: Install VirtualBox
-#    command: yum install -y VirtualBox-5.1
-#    become: true
-#    when: ansible_os_family == "RedHat"
-
   - name: Update Repository List
     command: sudo {{ item }}
     with_items: 
@@ -46,9 +41,14 @@
     when: ansible_os_family == "RedHat"
 
   - name: Install VirtualBox
-    yum: name=VirtualBox-5.1 state=present
+    command: yum install -y VirtualBox-5.1
     become: true
     when: ansible_os_family == "RedHat"
+
+#  - name: Install VirtualBox
+#    yum: name=VirtualBox-5.1 state=present
+#    become: true
+#    when: ansible_os_family == "RedHat"
 
   - name: Check that you have the kernel sources downloaded for your running kernel version (if they don't match you might need to yum update and reboot)
     command: echo {{ item }}
